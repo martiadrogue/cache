@@ -6,10 +6,6 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-**Note:** Replace ```cache``` ```A lightweight caching system.``` with their
-correct values in [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md), [LICENSE.md](LICENSE.md) and
-[composer.json](composer.json) files, then delete this line.
-
  A lightweight caching system. This package supports PSR-6.
 
 ## Install
