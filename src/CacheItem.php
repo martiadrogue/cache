@@ -26,7 +26,7 @@ class CacheItem implements CacheItemInterface
 
     public function get()
     {
-        return $this;
+        return $this->value;
     }
 
     public function isHit()
