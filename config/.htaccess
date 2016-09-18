@@ -1,6 +1,0 @@
-#Apache 2.4+
-Require local
-
-#Before Apache 2.4
-#Order deny, allow
-#Deny from all
