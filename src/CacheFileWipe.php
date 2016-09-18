@@ -9,7 +9,7 @@ class CacheFileWipe implements CacheWipable
 {
     private $cacheFilePool;
 
-    public function __construct(CacheFilePool $cacheFilePool)
+    public function __construct(CacheItemPool $cacheFilePool)
     {
         $this->cacheFilePool = $cacheFilePool;
     }
@@ -29,4 +29,5 @@ class CacheFileWipe implements CacheWipable
     public function buildCache($key, $value, $hit)
     {
         return new CacheFile($key, $value, $hit);
-    }}
+    }
+}

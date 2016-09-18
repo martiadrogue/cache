@@ -43,6 +43,20 @@ We accept contributions via Pull Requests on [Github][link-project-home].
 composer test
 ```
 
+# NOTES
+
+PHP mod xDebug helps debugging code and execute PHPUnit test, but makes composer and other scripts slow. To deactivate. Run next command.
+
+``` bash
+sudo php5dismod -s cli xdebug
+```
+
+And turn on, calling command.
+
+``` bash
+sudo php5enmod -s cli xdebug
+```
+
 **Happy coding**!
 
 [link-project-home]: https://github.com/martiadrogue/cache
