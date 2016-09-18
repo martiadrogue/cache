@@ -5,7 +5,7 @@ namespace MartiAdrogue\Cache;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
-class CacheFilePool implements CacheItemPoolInterface
+class CacheFilePool extends CacheItemPool
 {
 
     public function flush()

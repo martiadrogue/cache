@@ -4,7 +4,7 @@ namespace MartiAdrogue\Cache;
 
 use Psr\Cache\CacheItemInterface;
 
-class CacheFile implements CacheItem
+class CacheFile extends CacheItem
 {
     const PATH = '../cache/';
 
