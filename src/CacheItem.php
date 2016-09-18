@@ -45,7 +45,6 @@ class CacheItem implements CacheItemInterface
     {
         $this->expiration = $expiration;
         // TODO: Add expiration time into disk
-
     }
 
     public function expiresAfter(DateInterval $interval)
@@ -54,6 +53,5 @@ class CacheItem implements CacheItemInterface
         $expirationTime->add($interval);
         $this->expiration = $expirationTime;
         // TODO: Update expiration time into disk
-
     }
 }
