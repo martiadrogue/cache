@@ -5,7 +5,7 @@ namespace MartiAdrogue\Cache;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
-class CacheItemPool implements CacheItemPoolInterface
+abstract class CacheItemPool implements CacheItemPoolInterface
 {
     private $data;
     private $deferred;
@@ -19,7 +19,7 @@ class CacheItemPool implements CacheItemPoolInterface
     public function getItem($key)
     {
         if (!$this->hasItem($key)) {
-            return new CacheItem($key, null, false);
+            return $this->buildCache($key, null, false);
         }
 
         return $this->data[$key];
@@ -46,11 +46,18 @@ class CacheItemPool implements CacheItemPoolInterface
         return false;
     }
 
+    /**
+     * Deletes all items in the pool. Remove cache from file system and memory.
+     * Although other references are stil in use.
+     *
+     * @return bool
+     *   True if the pool was successfully cleared. False if there was an error.
+     */
     public function clear()
     {
         unset($this->data);
         $this->data = [];
-        // TODO: Destroy all cache from disk
+        $this->flush();
 
         return true;
     }
@@ -58,9 +65,8 @@ class CacheItemPool implements CacheItemPoolInterface
     public function deleteItem($key)
     {
         unset($this->data[$key]);
-        // TODO: Destroy item from disk
 
-        return true;
+        return $this->takeDown($key);
     }
 
     public function deleteItems(array $keys)
@@ -75,10 +81,10 @@ class CacheItemPool implements CacheItemPoolInterface
 
     public function save(CacheItemInterface $item)
     {
-        $itemHitted = new CacheItem($item->getKey(), $item->get(), true);
+        $itemHitted = $this->buildCache($item->getKey(), $item->get(), true);
         $this->date[$itemHitted->getKey()] = $itemHitted;
 
-        return true;
+        return $itemHitted->isHit();
     }
 
     public function saveDeferred(CacheItemInterface $item)
@@ -99,4 +105,10 @@ class CacheItemPool implements CacheItemPoolInterface
     {
         return $item->isHit();
     }
+
+    abstract public function flush();
+
+    abstract public function takeDown($key);
+
+    abstract public function buildCache($key, $value, $hit);
 }
