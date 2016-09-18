@@ -5,13 +5,15 @@ namespace MartiAdrogue\Cache;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
-abstract class CacheItemPool implements CacheItemPoolInterface
+class CacheItemPool implements CacheItemPoolInterface
 {
     private $data;
     private $deferred;
+    private $cacheWipper;
 
-    public function __construct()
+    public function __construct(CacheWipable $cacheWipper)
     {
+        $this->cacheWipper = $cacheWipper;
         $this->data = [];
         $this->deferred = [];
     }
@@ -19,7 +21,7 @@ abstract class CacheItemPool implements CacheItemPoolInterface
     public function getItem($key)
     {
         if (!$this->hasItem($key)) {
-            return $this->buildCache($key, null, false);
+            return $this->cacheWipper->buildCache($key, null, false);
         }
 
         return $this->data[$key];
@@ -57,7 +59,7 @@ abstract class CacheItemPool implements CacheItemPoolInterface
     {
         unset($this->data);
         $this->data = [];
-        $this->flush();
+        $this->cacheWipper->flush();
 
         return true;
     }
@@ -66,7 +68,7 @@ abstract class CacheItemPool implements CacheItemPoolInterface
     {
         unset($this->data[$key]);
 
-        return $this->takeDown($key);
+        return $this->cacheWipper->takeDown($key);
     }
 
     public function deleteItems(array $keys)
@@ -81,7 +83,7 @@ abstract class CacheItemPool implements CacheItemPoolInterface
 
     public function save(CacheItemInterface $item)
     {
-        $itemHitted = $this->buildCache($item->getKey(), $item->get(), true);
+        $itemHitted = $this->cacheWipper->buildCache($item->getKey(), $item->get(), true);
         $this->date[$itemHitted->getKey()] = $itemHitted;
 
         return $itemHitted->isHit();
@@ -105,10 +107,4 @@ abstract class CacheItemPool implements CacheItemPoolInterface
     {
         return $item->isHit();
     }
-
-    abstract public function flush();
-
-    abstract public function takeDown($key);
-
-    abstract public function buildCache($key, $value, $hit);
 }
