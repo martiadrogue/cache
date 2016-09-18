@@ -17,6 +17,7 @@ class CacheItem implements CacheItemInterface
         $this->value = $hit ? $value : null;
         $this->hit = $hit;
         $this->expiration = null;
+        // TODO: Save data into disk
     }
 
     public function getKey()
@@ -37,11 +38,14 @@ class CacheItem implements CacheItemInterface
     public function set($value)
     {
         $this->value = $value;
+        // TODO: Update value into disk
     }
 
     public function expiresAt(DateTimeInterface $expiration)
     {
         $this->expiration = $expiration;
+        // TODO: Add expiration time into disk
+
     }
 
     public function expiresAfter(DateInterval $interval)
@@ -49,5 +53,7 @@ class CacheItem implements CacheItemInterface
         $expirationTime = new DateTime();
         $expirationTime->add($interval);
         $this->expiration = $expirationTime;
+        // TODO: Update expiration time into disk
+
     }
 }

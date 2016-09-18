@@ -50,6 +50,7 @@ class CacheItemPool implements CacheItemPoolInterface
     {
         unset($this->data);
         $this->data = [];
+        // TODO: Destroy all cache from disk
 
         return true;
     }
@@ -57,6 +58,7 @@ class CacheItemPool implements CacheItemPoolInterface
     public function deleteItem($key)
     {
         unset($this->data[$key]);
+        // TODO: Destroy item from disk
 
         return true;
     }
