@@ -4,12 +4,12 @@ namespace MartiAdrogue\Cache;
 
 use Psr\Cache\CacheItemInterface;
 
-class CacheItem implements CacheItemInterface
+abstract class CacheItem implements CacheItemInterface
 {
-    private $key;
-    private $value;
-    private $hit;
-    private $expiration;
+    protected $key;
+    protected $value;
+    protected $hit;
+    protected $expiration;
 
     public function __construct($key, $value, $hit)
     {
@@ -17,7 +17,7 @@ class CacheItem implements CacheItemInterface
         $this->value = $hit ? $value : null;
         $this->hit = $hit;
         $this->expiration = null;
-        // TODO: Save data into disk
+        $this->build();
     }
 
     public function getKey()
@@ -38,13 +38,13 @@ class CacheItem implements CacheItemInterface
     public function set($value)
     {
         $this->value = $value;
-        // TODO: Update value into disk
+        $this->build();
     }
 
     public function expiresAt(DateTimeInterface $expiration)
     {
         $this->expiration = $expiration;
-        // TODO: Add expiration time into disk
+        $this->build();
     }
 
     public function expiresAfter(DateInterval $interval)
@@ -52,6 +52,8 @@ class CacheItem implements CacheItemInterface
         $expirationTime = new DateTime();
         $expirationTime->add($interval);
         $this->expiration = $expirationTime;
-        // TODO: Update expiration time into disk
+        $this->build();
     }
+
+    abstract public function build();
 }
