@@ -28,6 +28,9 @@ class CacheFileWipe implements CacheWipable
 
     public function buildCache($key, $value, $hit)
     {
-        return new CacheFile($key, $value, $hit);
+        $cache = new CacheFile($key, $value, $hit);
+        $cache->persist();
+
+        return $cache;
     }
 }
