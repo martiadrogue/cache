@@ -18,7 +18,7 @@ class CacheFile extends CacheItem
     {
         $fileName = $this->turnKeyToFileName();
 
-        return file_put_contents(self::PATH.$fileName, $this->data, LOCK_EX);
+        return file_put_contents(self::PATH.$fileName, serialize($this->data), LOCK_EX);
     }
 
     public function takeDown()
