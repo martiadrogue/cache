@@ -41,16 +41,12 @@ abstract class CacheItem implements CacheItemInterface
 
     public function expiresAt($expiration)
     {
-        // DateTimeInterface
         $this->expiration = $expiration;
     }
 
     public function expiresAfter($interval)
     {
-        // DateInterval
-        $expirationTime = new DateTime();
-        $expirationTime->add($interval);
-        $this->expiration = $expirationTime;
+        $this->expiration = time() + $interval;
     }
 
     abstract public function persist();
