@@ -14,7 +14,7 @@ class CacheFile extends CacheItem
         $this->setUpRoot();
     }
 
-    public function build()
+    public function persist()
     {
         $fileName = $this->turnKeyToFileName();
 
