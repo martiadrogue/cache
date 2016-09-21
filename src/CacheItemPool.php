@@ -85,6 +85,7 @@ class CacheItemPool implements CacheItemPoolInterface
     {
         $itemHitted = $this->cacheWipper->buildCache($item->getKey(), $item->get(), true);
         $this->date[$itemHitted->getKey()] = $itemHitted;
+        $itemHitted->persist();
 
         return $itemHitted->isHit();
     }

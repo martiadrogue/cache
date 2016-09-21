@@ -17,7 +17,6 @@ abstract class CacheItem implements CacheItemInterface
         $this->value = $hit ? $value : null;
         $this->hit = $hit;
         $this->expiration = null;
-        $this->build();
     }
 
     public function getKey()
@@ -38,14 +37,12 @@ abstract class CacheItem implements CacheItemInterface
     public function set($value)
     {
         $this->value = $value;
-        $this->build();
     }
 
     public function expiresAt($expiration)
     {
         // DateTimeInterface
         $this->expiration = $expiration;
-        $this->build();
     }
 
     public function expiresAfter($interval)
@@ -54,8 +51,7 @@ abstract class CacheItem implements CacheItemInterface
         $expirationTime = new DateTime();
         $expirationTime->add($interval);
         $this->expiration = $expirationTime;
-        $this->build();
     }
 
-    abstract public function build();
+    abstract public function persist();
 }
